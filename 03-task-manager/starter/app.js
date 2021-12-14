@@ -1,5 +1,3 @@
-console.log('Task Manager App');
-
 const express = require('express');
 const app = express();
 const task = require('./routes/task');
@@ -8,11 +6,11 @@ const task = require('./routes/task');
 app.use(express.json())
 
 // route
-app.send('/hello', (req, res) => {
+app.use('/hello', (req, res) => {
     res.send("APP is RUNNING")
 });
 
-app.use('/app/v1/task', task)
+app.use('/api/v1/task', task)
 
 // method
 
@@ -22,5 +20,5 @@ app.get('/api/v1/task/:id'); // get a single task
 app.patch('/api/v1/task/:id'); // update a task
 app.delete('/api/v1/task/:id'); // delete a task
 
-const port = 5000
-app.listen(port, console.log`Server is listening on ${PORT}`);
+const PORT = 5000
+app.listen(PORT, console.log (`Server is listening on PORT ${PORT}`));
