@@ -4,6 +4,5 @@ const { getAllTask, getTaskById, createTask, updateTask, deleteTask }= require('
 
 // combined route for task
 router.route('/').get(getAllTask).post(createTask);
-router.route('/:id').get(getTaskById).patch(updateTask).delete(deleteTask);
-
+router.route('/:id').get(getTaskById).patch(updateTask).delete(deleteTask)
 module.exports = router

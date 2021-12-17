@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const tasks = require('./routes/task');
 const connectDB = require('./db/connect');
+const notFound = require('./middleware/not-found')
 
 // env file
 require('dotenv').config();
@@ -17,6 +18,7 @@ app.use(express.json())
 // });
 
 app.use('/api/v1/tasks', tasks)
+app.use(notFound)
 
 // method
 // app.get('/api/v1/tasks'); // get all task
