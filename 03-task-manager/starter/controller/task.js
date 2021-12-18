@@ -3,12 +3,8 @@ const Task = require('../model/task');
 
 // GET ALL TASK
 const getAllTask = asyncHandler( async (req, res) => {
-        try {
-            const task = await Task.find({})
-            res.status(200).json({ task })
-        } catch (error) {
-            res.status(500).json({ msg : error })
-        }
+        const task = await Task.find({})
+        res.status(200).json({ task })
     }
 )
 // To create task
