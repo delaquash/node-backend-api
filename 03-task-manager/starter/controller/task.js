@@ -13,8 +13,7 @@ const createTask = asyncHandler(async (req, res) => {
         res.status(201).json({ task })
 })
 // to get a task by id
-const getTaskById = async (req, res) => {
-    try {
+const getTaskById = asyncHandler (async (req, res) => {
         const {id:taskID} = req.params
         const task = await Task.findOne({_id: taskID})
         // if there is no task at all
@@ -22,34 +21,26 @@ const getTaskById = async (req, res) => {
           return res.status(404).json({ msg: `No task with the id: ${taskID}`}) 
         }
         res.status(200).json({ task })
-    } catch (error) {
-        res.status(500).json({ msg : error })
-    }
-}
+    
+})
 
 
-const updateTask = async (req, res) => {
-    try {
+const updateTask = asyncHandler (async (req, res) => {
         const {id: taskID} = req.params
         const task = await Task.findOneAndUpdate({_id: taskID}, req.body, {
             new:true, 
             runValidators: true
         })
-
         // if there is no task to update
         if(!task){
             return res.status(404).json({ msg: `No task with the id: ${taskID}`}) 
         }
         res.status(200).json({task})
-    } catch (error) {
-        res.status(500).json({ msg : error })
-    }
-}
+})
 
 
 // Delete by ID
-const deleteTask = async (req, res) => {
-    try {
+const deleteTask = asyncHandler (async (req, res) => {
         const { id: taskID } = req.params
         const task =  await Task.findOneAndDelete({_id: taskID })
         // If there is no ID to be deleted
@@ -57,10 +48,7 @@ const deleteTask = async (req, res) => {
            return res.status(404).json({msg: `No task with the id: ${taskID}`})
         }
         res.status(200).json({ task })
-    }  catch (error) {
-        res.status(500).json({ msg : error })
-    }
-}
+})
 
 
 
