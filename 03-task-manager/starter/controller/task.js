@@ -1,5 +1,7 @@
+const { createCustomError } = require('../errors/custom-errors');
 const asyncHandler = require('../middleware/async-handler');
 const Task = require('../model/task');
+ 
 
 // GET ALL TASK
 const getAllTask = asyncHandler( async (req, res) => {
@@ -13,12 +15,14 @@ const createTask = asyncHandler(async (req, res) => {
         res.status(201).json({ task })
 })
 // to get a task by id
-const getTaskById = asyncHandler (async (req, res) => {
+const getTaskById = asyncHandler (async (req, res, next) => {
         const {id:taskID} = req.params
         const task = await Task.findOne({_id: taskID})
         // if there is no task at all
         if(!task){
-          return res.status(404).json({ msg: `No task with the id: ${taskID}`}) 
+            // Using custom error to defiine a 404 page
+            return next(createCustomError(`No task with the id: ${taskID}`, 404))
+        //    return res.status(404).json({ msg: `No task with the id: ${taskID}`}) 
         }
         res.status(200).json({ task })
     
@@ -33,7 +37,8 @@ const updateTask = asyncHandler (async (req, res) => {
         })
         // if there is no task to update
         if(!task){
-            return res.status(404).json({ msg: `No task with the id: ${taskID}`}) 
+            // Using custom error to defiine a 404 page
+            return next(createCustomError(`No task with the id: ${taskID}`, 404))
         }
         res.status(200).json({task})
 })
@@ -45,7 +50,7 @@ const deleteTask = asyncHandler (async (req, res) => {
         const task =  await Task.findOneAndDelete({_id: taskID })
         // If there is no ID to be deleted
         if(!task) {
-           return res.status(404).json({msg: `No task with the id: ${taskID}`})
+            return next(customElements(`No task with the id: ${taskID}`, 404))
         }
         res.status(200).json({ task })
 })
