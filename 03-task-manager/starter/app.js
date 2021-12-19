@@ -29,7 +29,8 @@ app.use(errorHandler)
 // app.patch('/api/v1/tasks/:id'); // update a task
 // app.delete('/api/v1/tasks/:id'); // delete a task
 
-const PORT = 5000;
+// To ensure server an load on another port except 500
+const PORT = process.env.PORT || 5000;
 
 
 // Database connection merged with port response
