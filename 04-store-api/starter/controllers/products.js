@@ -9,7 +9,9 @@ const getAllProductsStatic = async(req, res) => {
     //         $options: 'i'
     //     }
     // })
-    const product = await Product.find({}).sort("-name price")
+    const product = await Product.find({})
+    // .sort("-name price") //To sort out name and price 
+    .select('name, price') //to select name and price
     res.status(200).json({ product, nbHits: product.length  })
 }
 
