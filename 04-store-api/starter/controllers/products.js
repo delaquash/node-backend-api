@@ -10,14 +10,16 @@ const getAllProductsStatic = async(req, res) => {
     //     }
     // })
     const product = await Product.find({})
-    // .sort("-name price") //To sort out name and price 
-    .select('name, price') //to select name and price
+    .sort("name") //To sort out name and price (alphabetical order)
+    .select('name price') //to select name and price
+    .limit(4) //to limit number of response to 4
+    .skip(1) //Skips the first item on the array in the response
     res.status(200).json({ product, nbHits: product.length  })
 }
 
 const getAllProducts= async (req, res) => {
 
-    const { featured, company, name, sort } = req.query
+    const { featured, company, name, sort, fields } = req.query
     const queryObject = {}
 
     if(featured){
@@ -35,9 +37,23 @@ const getAllProducts= async (req, res) => {
     if(sort){
         //Adding sort functionalities 
         const sortList = sort.split(',').join('')
-        resutl = result.sort("createdAt")
-        
+        result = result.sort(sortList)
+    }else {
+        result = result.sort("createdAt")
     }
+
+    if(fields){
+        const fieldList = fields.split(',').join('')
+        result = result.select(fieldList)
+    }
+
+    const page = Number(req.query.page) || 1 //More like pagination
+    const limit = Number(req.query.limit) || 7 //limit the number of response we get
+    const skip = (page - 1) * limit;
+
+    result = result.skip(skip).limit(limit)
+
+
     const product = await result
     res.status(200).json({  product, nbHits: product.length })
 }
