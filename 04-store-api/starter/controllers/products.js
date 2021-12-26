@@ -9,8 +9,11 @@ const getAllProductsStatic = async(req, res) => {
     //         $options: 'i'
     //     }
     // })
-    const product = await Product.find({})
-    .sort("name") //To sort out name and price (alphabetical order)
+    const product = await Product.find({ 
+        price : { $gt: 30 } //Price greater than 30
+    })
+    .sort("price")
+    // .sort("name") //To sort out name and price (alphabetical order)
     .select('name price') //to select name and price
     .limit(4) //to limit number of response to 4
     .skip(1) //Skips the first item on the array in the response
@@ -19,7 +22,7 @@ const getAllProductsStatic = async(req, res) => {
 
 const getAllProducts= async (req, res) => {
 
-    const { featured, company, name, sort, fields } = req.query
+    const { featured, company, name, sort, fields, numericFilters } = req.query
     const queryObject = {}
 
     if(featured){
@@ -31,6 +34,20 @@ const getAllProducts= async (req, res) => {
     }
     if (name) {
         queryObject.name = { $regex: name, $options: 'i' }
+    }
+
+    // numeric filter
+    if(numericFilters){
+        const operatorMap = {
+            '>': '$gt',
+            '>=': '$gte',
+            '=': '$eq',
+            '<':'$lt',
+            '<=': '$lte'
+        }
+
+        const regex = /\b(<|>|>=|=|<|<=)\b/g
+        let filters = numericFilters.replace(regex, (match)=> `-${operatorMap[match]}-`)
     }
     // console.log(queryObject)
     let result = Product.find(queryObject)
