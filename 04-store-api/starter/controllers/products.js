@@ -48,6 +48,7 @@ const getAllProducts= async (req, res) => {
 
         const regex = /\b(<|>|>=|=|<|<=)\b/g
         let filters = numericFilters.replace(regex, (match)=> `-${operatorMap[match]}-`)
+        console.log(filters)
     }
     // console.log(queryObject)
     let result = Product.find(queryObject)
