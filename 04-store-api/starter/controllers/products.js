@@ -36,7 +36,7 @@ const getAllProducts= async (req, res) => {
         queryObject.name = { $regex: name, $options: 'i' }
     }
 
-    // numeric filter
+    // numeric filter based on certain parameters
     if(numericFilters){
         const operatorMap = {
             '>': '$gt',
