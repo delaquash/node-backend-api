@@ -21,16 +21,10 @@ const login = async(req, res) => {
 }
 
 const dashboard = async (req, res) => {
-    const authHeader = req.headers.authorization
-    // if there is no bearer or bearer doesnt start with correct values
-    if(!authHeader || !authHeader.startsWith('Bearer ')){
-        throw new CustomAPIError("No token provided", 401)
-    }
-    const token = authHeader.split(' ')[1]
-    console.log(token)
+    console.log(req.user)
     // verification of token
     const luckyNumber = Math.floor(Math.random() * 100)
-    res.status(200).json({msg: `Hello, ${decodedToken.username}`, secret:`Here is your authorized data, your lucky number is ${luckyNumber}`})
+    res.status(200).json({msg: `Hello, ${req.user.username}`, secret:`Here is your authorized data, your lucky number is ${luckyNumber}`})
 }
 
 module.exports = {
