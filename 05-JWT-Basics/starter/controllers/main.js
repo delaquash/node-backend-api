@@ -24,6 +24,7 @@ const dashboard = async (req, res) => {
     console.log(req.user)
     // verification of token
     const luckyNumber = Math.floor(Math.random() * 100)
+    console.log(luckyNumber)
     res.status(200).json({msg: `Hello, ${req.user.username}`, secret:`Here is your authorized data, your lucky number is ${luckyNumber}`})
 }
 
