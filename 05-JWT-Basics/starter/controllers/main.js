@@ -14,6 +14,7 @@ const login = async(req, res) => {
 
     // just for demo, this is always provided by DB
     const id = new Date().getDate()
+    console.log(id)
 
     // trying to keep payload small, better experience for the user
     const token = jwt.sign({id, username}, process.env.JWT_SECRET, {expiresIn: '30d'})
