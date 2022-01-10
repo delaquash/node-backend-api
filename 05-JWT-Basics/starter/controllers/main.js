@@ -14,7 +14,6 @@ const login = async(req, res) => {
 
     // just for demo, this is always provided by DB
     const id = new Date().getDate()
-    console.log(id)
 
     // trying to keep payload small, better experience for the user
     const token = jwt.sign({id, username}, process.env.JWT_SECRET, {expiresIn: '30d'})
@@ -25,7 +24,6 @@ const dashboard = async (req, res) => {
     console.log(req.user)
     // verification of token
     const luckyNumber = Math.floor(Math.random() * 100)
-    console.log(luckyNumber)
     res.status(200).json({msg: `Hello, ${req.user.username}`, secret:`Here is your authorized data, your lucky number is ${luckyNumber}`})
 }
 

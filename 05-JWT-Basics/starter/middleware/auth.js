@@ -1,12 +1,14 @@
 const jwt = require("jsonwebtoken");
+const { Unauthenticated } = require("../errors");
 const CustomAPIError = require("../errors/custom-error");
+
 
 
 const authenticationMiddleware = async (req, res, next) => {
     const authHeader = req.headers.authorization
     // if there is no bearer or bearer doesnt start with correct values
     if(!authHeader || !authHeader.startsWith('Bearer ')){
-        throw new CustomAPIError("No token provided", 401)
+        throw new Unauthenticated("No token provided", 401)
     }
     const token = authHeader.split(' ')[1]
     try {
