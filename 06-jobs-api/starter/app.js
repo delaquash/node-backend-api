@@ -17,11 +17,13 @@ app.use(express.json());
 
 // routes
 app.use("api/v1/auth", authRouter);
-app.use("api/v1/auth", jobRouter);
+app.use("api/v1/jobs", jobRouter);
+
+
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {
