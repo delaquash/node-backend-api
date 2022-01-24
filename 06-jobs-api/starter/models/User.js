@@ -20,8 +20,7 @@ const UserSchema = new mongoose.Schema ({
         type: String,
         required: [true, 'Please enter password'],
         // minlength and maxlength will be removed once we hash our password
-        minLength: 8,
-        maxLength: 50
+        minLength: 8
     }
 })
 
