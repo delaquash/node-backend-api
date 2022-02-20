@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // const app = require('../app')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require('dotenv').config({path:__dirname+'../env'})
+require('dotenv').config({path:__dirname+'../env'});
 
 const UserSchema = new mongoose.Schema ({
     name:{
