@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // const app = require('../app')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require('dotenv').config({path:__dirname+'../env'});
+// require('dotenv').config({path:__dirname+'../env'});
 
 const UserSchema = new mongoose.Schema ({
     name:{
@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema ({
     },
     email: {
         type: String,
-        required: [true, "Kindly provide a password"],
+        required: [true, "Kindly provide a valid email"],
         match:  [
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             'Please provide a valid email',
@@ -41,9 +41,13 @@ UserSchema.methods.comparePassword= async function(candidatePassword) {
 
 // jwt encryption to get token 
 UserSchema.methods.createJWT = function() {
-    return jwt.sign ({ userId: this._id, name: this.name }, process.env.JWT_SECRET, {
+    return jwt.sign (
+        { userId: this._id, name: this.name },
+         process.env.JWT_SECRET, 
+        {
         expiresIn: process.env.JWT_LIFETIME
-    })
+        }
+    )
 }
 
 
