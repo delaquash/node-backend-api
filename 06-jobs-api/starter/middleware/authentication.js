@@ -18,7 +18,7 @@ const auth = async (req, res, next) => {
         req.user = { userId: payload.userId, name: payload.name }
         next()
     } catch (error) {
-        throw new UnauthenticatedError('Authentication Invalid atm')
+        throw new UnauthenticatedError('Authentication Invalid atmmmm')
     }
 }
 
